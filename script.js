@@ -64,26 +64,36 @@ function recrutarTripulacao() {
                 }               
             }
 btnRecrutas.addEventListener('click', recrutarTripulacao);
-const telaNasa = document.getElementById('tela-nasa');
+
+const telaNasa = document.getElementById('conteudo-nasa');
 
 async function conectarComNASA() {
+    telaNasa.innerHTML = "<p>⏳ Hackeando satélites da NASA...</p>";
     
-    // O AIRBAG DA NAVE COMEÇA AQUI:
     try {
-        // TENTA buscar os dados direto da fonte
         let respostaNasa = await fetch("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY");
         let dados = await respostaNasa.json();
         
-        // Se der certo, joga na tela (Voltamos para o original em inglês por enquanto)
+        // A MÁGICA NOVA ESTÁ AQUI: O JavaScript decide se é vídeo ou foto!
+        let midiaHTML = "";
+        
+        if (dados.media_type === "video") {
+            // Se for vídeo, criamos um iframe (player de vídeo)
+            midiaHTML = `<iframe src="${dados.url}" width="100%" height="300" style="border-radius: 10px; margin-bottom: 15px; border: none;" allowfullscreen></iframe>`;
+        } else {
+            // Se for imagem, criamos a tag img normal
+            midiaHTML = `<img src="${dados.url}" alt="Foto da NASA" style="max-width: 100%; border-radius: 10px; margin-bottom: 15px;">`;
+        }
+        
+        // Injetando tudo na tela
         telaNasa.innerHTML = `
             <h4 style="color: #00d4ff;">${dados.title}</h4>
-            <img src="${dados.url}" alt="Foto da NASA" style="max-width: 100%; border-radius: 10px; margin-bottom: 15px;">
+            ${midiaHTML}
             <p style="font-size: 0.9rem; color: #ccc;">${dados.explanation}</p>
         `;
         
     } catch (erro) {
-        // SE DER ERRO (a internet cair, a NASA bloquear), ele cai aqui e não quebra o site!
-        telaNasa.innerHTML = `<p style="color: red;"> Erro de comunicação com a base: O sinal foi perdido.</p>`;
+        telaNasa.innerHTML = `<p style="color: red;">❌ Erro de comunicação com a base: O sinal foi perdido ou o limite da DEMO_KEY foi atingido. Tente de novo em 1 hora.</p>`;
         console.log("O erro foi:", erro);
     }
 }
