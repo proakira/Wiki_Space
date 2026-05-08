@@ -54,16 +54,16 @@ let memoriadaNave = localStorage.getItem('memoriaNave')
         listaDeRecrutamento.innerHTML = memoriadaNave;
     }
 function recrutarTripulacao() {
-    recrutarTirpulaçao.innerHTML = ("")
-    for (let i = 0; i < candidatos.length; i++) {
-        let tempExp = candidatos[i].experiencia;
-            if (tempExp >= 5 || (candidatos[i].especialidade === "Médico")) {
-                listaDeRecrutamento.innerHTML += `<li class="canditado-qualificado">O candidato ${candidatos[i].nome} é qualificado para a missão!</li>`;
-            }    else  {
-                        listaDeRecrutamento.innerHTML += `<li class="candidato-desclassificado">O candidato ${candidatos[i].nome} é inexperiente. Ignorando...</li>`;
-                    }
-                }               
-            }
+    recrutarTirpulaçao.innerHTML = "";
+        for (let i = 0; i < candidatos.length; i++) {
+            let tempExp = candidatos[i].experiencia;
+                if (tempExp >= 5 || (candidatos[i].especialidade === "Médico")) {
+                    listaDeRecrutamento.innerHTML += `<li class="canditado-qualificado">O candidato ${candidatos[i].nome} é qualificado para a missão!</li>`;
+                }    else  {
+                            listaDeRecrutamento.innerHTML += `<li class="candidato-desclassificado">O candidato ${candidatos[i].nome} é inexperiente. Ignorando...</li>`;
+                        }
+                    }               
+                }
 btnRecrutas.addEventListener('click', recrutarTripulacao);
 
 const telaNasa = document.getElementById('conteudo-nasa');
