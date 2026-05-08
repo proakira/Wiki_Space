@@ -54,6 +54,7 @@ let memoriadaNave = localStorage.getItem('memoriaNave')
         listaDeRecrutamento.innerHTML = memoriadaNave;
     }
 function recrutarTripulacao() {
+    recrutarTirpulaçao.innerHTML = ("")
     for (let i = 0; i < candidatos.length; i++) {
         let tempExp = candidatos[i].experiencia;
             if (tempExp >= 5 || (candidatos[i].especialidade === "Médico")) {
