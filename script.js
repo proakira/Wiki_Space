@@ -37,6 +37,8 @@ for (let i = 0; i < listaDePlanetas.length; i++) {
             planetasHabitaveis.innerHTML += `<li class="planeta-hostil">O planeta ${listaDePlanetas[i].nome} é hostil. Ignorando...</li>`;
         }
 };*/
+
+//LISTA DE CANDIDATOS PARA A MISSÃO
 const candidatos = [
     { nome: "Ana", especialidade: "Piloto", experiencia: 6 },
     { nome: "Beto", especialidade: "Médico", experiencia: 2 },
@@ -54,10 +56,10 @@ let memoriadaNave = localStorage.getItem('memoriaNave')
         listaDeRecrutamento.innerHTML = memoriadaNave;
     }
 function recrutarTripulacao() {
-    listaDeRecrutamento.innerHTML = "";
+    listaDeRecrutamento.innerHTML = ""; 
         for (let i = 0; i < candidatos.length; i++) {
             let tempExp = candidatos[i].experiencia;
-                if (tempExp >= 5 || (candidatos[i].especialidade === "Médico")) {
+                if (tempExp === 5 || (candidatos[i].especialidade === "Médico")) {
                     listaDeRecrutamento.innerHTML += `<li class="canditado-qualificado">O candidato ${candidatos[i].nome} é qualificado para a missão!</li>`;
                 }    else  {
                             listaDeRecrutamento.innerHTML += `<li class="candidato-desclassificado">O candidato ${candidatos[i].nome} é inexperiente. Ignorando...</li>`;
@@ -66,6 +68,7 @@ function recrutarTripulacao() {
                 }
 btnRecrutas.addEventListener('click', recrutarTripulacao);
 
+//API DA NASA
 const telaNasa = document.getElementById('conteudo-nasa');
 
 async function conectarComNASA() {
@@ -100,3 +103,29 @@ async function conectarComNASA() {
 }
 
 conectarComNASA();
+
+// =======================================================
+// RADAR DE ANIMAÇÃO: Efeito das palavras subindo ao rolar
+// =======================================================
+
+// 1. Criamos o observador (O Radar)
+const observadorDeRolagem = new IntersectionObserver((entradas) => {
+    entradas.forEach((entrada) => {
+        // Se o elemento entrou na tela...
+        if (entrada.isIntersecting) {
+            // Adicionamos a classe que faz ele subir e aparecer
+            entrada.target.classList.add('mostrar');
+        }
+    });
+});
+
+// 2. Pegamos todas as sections e o painel da NASA que queremos animar
+const elementosParaAnimar = document.querySelectorAll('section, #tela-nasa, h1');
+
+// 3. Mandamos o Radar observar cada um deles
+elementosParaAnimar.forEach((elemento) => {
+    // Primeiro, deixamos tudo escondido para baixo
+    elemento.classList.add('escondido');
+    // Depois, ligamos o radar neles
+    observadorDeRolagem.observe(elemento);
+});
