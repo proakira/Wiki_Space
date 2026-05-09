@@ -1,41 +1,30 @@
 /* ==========================================================================
-   1. VARIÁVEIS GLOBAIS (O "Painel de Controle" das Cores e Medidas)
+   1. VARIÁVEIS GLOBAIS (Tema: Buraco Negro / Gargantua)
    ========================================================================== */
 :root {
-    --bg-primario: #050810;
-    --bg-secundario: #0a1128;
-    --bg-vidro: rgba(10, 17, 40, 0.6);
-    --cor-texto: #e2e8f0;
-    --cor-texto-mutado: #94a3b8;
-    --cor-destaque: #00f3ff;
-    --cor-alerta: #ff0055;
-    --cor-sucesso: #00ff88;
+    --bg-primario: #000000; /* Escuridão total */
+    --bg-secundario: #050508;
+    --bg-vidro: rgba(10, 10, 15, 0.85); /* Vidro bem mais escuro */
+    --cor-texto: #d1d5db;
+    --cor-texto-mutado: #6b7280;
+    --cor-destaque: #8a2be2; /* Roxo espacial profundo no lugar do ciano */
+    --cor-alerta: #ff3333;
+    --cor-sucesso: #22c55e;
     --fonte-titulos: 'Orbitron', sans-serif;
     --fonte-textos: 'Rajdhani', sans-serif;
     --borda-raio: 16px;
-    --sombra-neon: 0 0 15px rgba(0, 243, 255, 0.4);
-    --sombra-caixa: 0 10px 30px rgba(0, 0, 0, 0.8);
+    /* Sombras que imitam a distorção da luz ao redor de um buraco negro */
+    --sombra-buraco-negro: 0 0 40px rgba(138, 43, 226, 0.15), inset 0 0 20px rgba(0, 0, 0, 0.9);
     --transicao-suave: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* ==========================================================================
-   2. RESET E CONFIGURAÇÕES BASES
+   2. O FUNDO DO BURACO NEGRO
    ========================================================================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     background-color: var(--bg-primario);
-    background-image: 
-        radial-gradient(circle at 15% 50%, rgba(0, 243, 255, 0.08), transparent 25%),
-        radial-gradient(circle at 85% 30%, rgba(255, 0, 85, 0.05), transparent 25%);
+    /* Cria o efeito do centro do buraco negro e o disco de acreção em volta */
+    background-image: radial-gradient(circle at 50% 50%, #150824 0%, #000000 70%);
     color: var(--cor-texto);
     font-family: var(--fonte-textos);
     font-size: 18px;
@@ -44,6 +33,22 @@ body {
     overflow-x: hidden;
 }
 
+/* Altere as sections para usar a nova sombra do buraco negro */
+section {
+    background: var(--bg-vidro);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(138, 43, 226, 0.1); /* Borda levemente roxa */
+    border-radius: var(--borda-raio);
+    padding: 40px;
+    margin: 40px auto;
+    box-shadow: var(--sombra-buraco-negro);
+    transition: var(--transicao-suave);
+}
+
+section:hover {
+    transform: translateY(-2px) scale(1.01); /* Puxa levemente como gravidade */
+    border-color: rgba(138, 43, 226, 0.4);
+}
 /* ==========================================================================
    3. TIPOGRAFIA (Títulos e Textos)
    ========================================================================== */
@@ -334,4 +339,37 @@ li:nth-child(5) { animation-delay: 0.5s; }
     #conteudo-nasa iframe {
         height: 250px; /* Reduz altura do vídeo no celular */
     }
+}
+.escondido {
+    opacity: 0;
+    transform: translateY(80px); /* Joga o elemento 80px para baixo */
+    transition: all 1s cubic-bezier(0.25, 1, 0.5, 1); /* Transição super suave */
+}
+
+.mostrar {
+    opacity: 1;
+    transform: translateY(0); /* Volta para a posição original */
+}
+img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+    margin: 25px auto;
+    display: block;
+    transition: all 0.3s ease;
+}
+img:hover {
+    transform: scale(1.02);
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 20px var(--cor-destaque);
+    /* Diz que a foto pode até ser menor, mas NUNCA pode ser maior que a tela do celular */
+    max-width: 100%; 
+    
+    /* Faz a altura se ajustar automaticamente para a foto não ficar achatada ou esticada */
+    height: auto;    
+    
+    /* Tira um pequeno espaço em branco fantasma que o HTML coloca embaixo das fotos */
+    display: block;  
 }
